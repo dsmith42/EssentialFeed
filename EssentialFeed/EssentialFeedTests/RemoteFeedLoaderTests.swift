@@ -22,7 +22,6 @@ class RemoteFeedLoaderTests: XCTestCase {
 
         sut.load()
 
-        XCTAssertFalse(client.requestedURLs.isEmpty)
         XCTAssertEqual(client.requestedURLs, [url])
     }
 
@@ -33,7 +32,6 @@ class RemoteFeedLoaderTests: XCTestCase {
         sut.load()
         sut.load()
 
-        XCTAssertFalse(client.requestedURLs.isEmpty)
         XCTAssertEqual(client.requestedURLs, [url, url])
     }
 
