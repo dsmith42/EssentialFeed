@@ -11,7 +11,7 @@ import XCTest
 class EssentialFeedTests: XCTestCase {
 
     func test_zero() {
-//        XCTFail("Tests not yet implemented")
+        XCTFail("Tests not yet implemented")
     }
 
 }
