@@ -74,6 +74,26 @@ class RemoteFeedLoaderTests: XCTestCase {
         })
     }
 
+    func test_load_deliversItemsOn200ResponseWithValidData() {
+        let (sut, client) = makeSUT()
+
+        let item1 = makeItem(id: UUID(),
+                             description: nil,
+                             location: nil,
+                             imageURL: URL(string: "https://any-url.com")!)
+
+        let item2 = makeItem(id: UUID(),
+                             description: "A description",
+                             location: "A location",
+                             imageURL: URL(string: "https://any-url.com")!)
+
+        let items = [item1.model, item2.model]
+
+        expect(sut, toCompleteWithResult: .success(items), when: {
+            client.complete(withStatusCode: 200, data: makeItemsJSON([item1.json, item2.json]))
+        })
+    }
+
     // MARK: - Helpers
 
     private func makeSUT(url: URL = URL(string: "https://any-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
@@ -82,7 +102,25 @@ class RemoteFeedLoaderTests: XCTestCase {
         return (sut, client)
     }
 
-    func expect(_ sut: RemoteFeedLoader,
+    private func makeItem(id: UUID = UUID(),
+                          description: String? = nil,
+                          location: String? = nil,
+                          imageURL: URL = URL(string: "https://any-url.com")!) -> (model: FeedItem, json: [String: Any]) {
+        let model = FeedItem(id: id, description: description, location: location, imageURL: imageURL)
+        let json = ["id": id.uuidString,
+                    "description": description,
+                    "location": location,
+                    "image": imageURL.absoluteString]
+            .compactMapValues { $0 }
+        return (model, json)
+    }
+
+    private func makeItemsJSON(_ items: [[String: Any]]) -> Data {
+        let itemsJSON = ["items": items]
+        return try! JSONSerialization.data(withJSONObject: itemsJSON)
+    }
+
+    private func expect(_ sut: RemoteFeedLoader,
                 toCompleteWithResult result: RemoteFeedLoader.Result,
                 when action: () -> Void,
                 file: StaticString = #filePath,
