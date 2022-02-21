@@ -26,6 +26,24 @@ class URLSessionHTTPClient {
 
 class URLSessionHTTPClientTests: XCTestCase {
 
+    func test_getFromURL_performsGetRequestFromURL() throws {
+        URLProtocolStub.startInterceptingRequests()
+        let url = URL(string: "https://expected-url.com")!
+        let exp = expectation(description: "Wait for request")
+        let sut = URLSessionHTTPClient()
+
+        URLProtocolStub.observeRequests { request in
+            XCTAssertEqual(request.url, url)
+            XCTAssertEqual(request.httpMethod, "GET")
+            exp.fulfill()
+        }
+
+        sut.get(from: url) { _ in }
+        
+        wait(for: [exp], timeout: 1.0)
+        URLProtocolStub.stopInterceptingRequests()
+    }
+
     func test_getFromURL_failsOnRequestError() throws {
         URLProtocolStub.startInterceptingRequests()
         let url = URL(string: "https://any-url.com")!
@@ -55,6 +73,7 @@ class URLSessionHTTPClientTests: XCTestCase {
 
     private class URLProtocolStub: URLProtocol {
         private static var stub: Stub?
+        private static var requestObserver: ((URLRequest) -> Void)?
 
         private struct Stub {
             let data: Data?
@@ -66,6 +85,10 @@ class URLSessionHTTPClientTests: XCTestCase {
             stub = Stub(data: data, response: response, error: error)
         }
 
+        static func observeRequests(observer: @escaping (URLRequest) -> Void) {
+            requestObserver = observer
+        }
+
         static func startInterceptingRequests() {
             URLProtocol.registerClass(URLProtocolStub.self)
         }
@@ -73,6 +96,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         static func stopInterceptingRequests() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
             stub = nil
+            requestObserver = nil
         }
 
         override class func canInit(with request: URLRequest) -> Bool {
@@ -80,6 +104,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         }
 
         override class func canonicalRequest(for request: URLRequest) -> URLRequest {
+            requestObserver?(request)
             return request
         }
 
