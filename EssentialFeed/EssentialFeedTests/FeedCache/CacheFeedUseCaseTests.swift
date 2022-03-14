@@ -1,3 +1,10 @@
+//
+//  XCTestCase+MemoryLeakTrackingHelper.swift
+//  EssentialFeedTests
+//
+//  Created by Dan Smith on 14/03/2022.
+//
+
 import XCTest
 import EssentialFeed
 
