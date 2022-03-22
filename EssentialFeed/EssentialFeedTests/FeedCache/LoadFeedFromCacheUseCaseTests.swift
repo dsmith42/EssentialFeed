@@ -93,7 +93,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
 
-    func test_load_doesNotDeleteCacheOnLessThanSevenDaysOldCache() {
+    func test_load_hasNoSideEffectsOnLessThanSevenDaysOldCache() {
         let feed = uniqueImageFeed()
         let fixedCurrentDate = Date()
         let lessThanSevenDaysAgoTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: 1)
@@ -179,12 +179,12 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
         NSError(domain: "A Domain", code: 1)
     }
 
-    func uniqueImage() -> FeedImage {
-        FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
-    }
-
     private func anyURL() -> URL {
         URL(string: "https://any-url.com")!
+    }
+
+    func uniqueImage() -> FeedImage {
+        FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
     }
 
     func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
