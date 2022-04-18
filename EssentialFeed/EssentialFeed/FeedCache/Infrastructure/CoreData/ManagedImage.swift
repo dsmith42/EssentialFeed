@@ -14,7 +14,9 @@ internal class ManagedFeedImage: NSManagedObject {
     @NSManaged internal var location: String?
     @NSManaged internal var url: URL
     @NSManaged internal var cache: ManagedCache
+}
 
+extension ManagedFeedImage {
     internal var local: LocalFeedImage {
         return LocalFeedImage(id: id, description: imageDescription, location: location, url: url)
     }
