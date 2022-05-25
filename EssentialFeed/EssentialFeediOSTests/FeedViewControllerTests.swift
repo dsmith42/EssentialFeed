@@ -8,7 +8,6 @@
 import XCTest
 import UIKit
 import EssentialFeed
-import CoreData
 
 final class FeedViewController: UITableViewController {
 	private var loader: FeedLoader?
@@ -50,7 +49,7 @@ final class FeedViewControllerTests: XCTestCase {
 		XCTAssertEqual(loader.loadCallCount, 1)
 	}
 
-	func test_pullToRefresh_loadsFeed() throws {
+	func test_userInitiatedFeedReload_loadsFeed() throws {
 		let (sut, loader) = makeSUT()
 		sut.loadViewIfNeeded()
 
@@ -78,18 +77,18 @@ final class FeedViewControllerTests: XCTestCase {
 		XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
 	}
 
-	func test_pullToRefresh_showsLoadingIndicator() throws {
+	func test_userInitiatedFeedReload_showsLoadingIndicator() throws {
 		let (sut, _) = makeSUT()
 
-		sut.refreshControl?.simulatePullToRefresh()
+		sut.simulateUserInitiatedFeedReload()
 
 		XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
 	}
 
-	func test_pullToRefresh_hidesLoadingIndicatorOnLoaderCompletion() throws {
+	func test_userInitiatedFeedReload_hidesLoadingIndicatorOnLoaderCompletion() throws {
 		let (sut, loader) = makeSUT()
 
-		sut.refreshControl?.simulatePullToRefresh()
+		sut.simulateUserInitiatedFeedReload()
 		loader.completeFeedLoading()
 
 		XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
@@ -122,7 +121,13 @@ final class FeedViewControllerTests: XCTestCase {
 	}
 }
 
-extension UIRefreshControl {
+private extension FeedViewController {
+	func simulateUserInitiatedFeedReload() {
+		refreshControl?.simulatePullToRefresh()
+	}
+}
+
+private extension UIRefreshControl {
 	func simulatePullToRefresh() {
 		allTargets.forEach { target in
 			actions(forTarget: target, forControlEvent: .valueChanged)?.forEach {
