@@ -14,16 +14,16 @@ final class FeedViewControllerTests: XCTestCase {
 
 	func test_loadFeedActions_requestFeedFromLoader() throws {
 		let (sut, loader) = makeSUT()
-		XCTAssertEqual(loader.loadCallCount, 0)
+		XCTAssertEqual(loader.loadCallCount, 0, "Expected no loading request on initialisation")
 
 		sut.loadViewIfNeeded()
-		XCTAssertEqual(loader.loadCallCount, 1)
+		XCTAssertEqual(loader.loadCallCount, 1, "Expected loading request once view is loaded")
 
 		sut.refreshControl?.simulatePullToRefresh()
-		XCTAssertEqual(loader.loadCallCount, 2)
+		XCTAssertEqual(loader.loadCallCount, 2, "Expected another loading request once user initiates a reload")
 
 		sut.refreshControl?.simulatePullToRefresh()
-		XCTAssertEqual(loader.loadCallCount, 3)
+		XCTAssertEqual(loader.loadCallCount, 3, "Expected yet another loading request once user initiates another reload")
 	}
 
 	func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() throws {
