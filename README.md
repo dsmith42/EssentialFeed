@@ -139,6 +139,19 @@ Given the customer doesn't have connectivity
 | `location`    | `String` (optional) |
 | `url`         | `URL`               |
 
+## UK goals for the Feed UI experiences
+
+[ ] Load feed automatically when view is presented
+[ ] Allow customer to manually reload feed (pull to refresh)
+[ ] Show a loading indicator while loading feed
+[ ] Render all loaded feed items (location, image, description)
+[ ] Image loading experience
+  [ ] Load when image view is visible (on the screen)
+  [ ] Cancel when image view is out of screen
+  [ ] Show a loading indicator while loading image (shimmer)
+  [ ] Optoin ot retry on image download error
+  [ ] Preload when image view is near visible
+
 ### Payload contract
 
 ```

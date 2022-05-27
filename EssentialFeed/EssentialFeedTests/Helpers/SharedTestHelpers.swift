@@ -8,9 +8,9 @@
 import Foundation
 
 func anyNSError() -> NSError {
-    NSError(domain: "A Domain", code: 1)
+	NSError(domain: "A Domain", code: 1)
 }
 
 func anyURL() -> URL {
-    URL(string: "https://any-url.com")!
+	URL(string: "https://any-url.com")!
 }
