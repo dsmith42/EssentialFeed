@@ -275,6 +275,10 @@
 		123053222840B54E00FD5558 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				123053282840B7F100FD5558 /* UIImage+TestHelpers.swift */,
+				1230532A2840B89300FD5558 /* UIButton+TestHelpers.swift */,
+				1230532C2840B8D600FD5558 /* UIRefreshControl+TestHelpers.swift */,
+				1230532E2840B94300FD5558 /* UIControl+TestHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -299,10 +303,6 @@
 		123053252840B57000FD5558 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				123053282840B7F100FD5558 /* UIImage+TestHelpers.swift */,
-				1230532A2840B89300FD5558 /* UIButton+TestHelpers.swift */,
-				1230532C2840B8D600FD5558 /* UIRefreshControl+TestHelpers.swift */,
-				1230532E2840B94300FD5558 /* UIControl+TestHelpers.swift */,
 				123053302840BAA300FD5558 /* FeedViewController+TestHelpers.swift */,
 				123053322840BB4600FD5558 /* FeedImageCell+TestHelpers.swift */,
 				123053342840BBF100FD5558 /* FeedViewControllerTests+LoaderSpy.swift */,
