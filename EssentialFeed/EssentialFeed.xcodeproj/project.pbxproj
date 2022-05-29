@@ -309,18 +309,10 @@
 		123053232840B55900FD5558 /* FeedUI */ = {
 			isa = PBXGroup;
 			children = (
+				12B46FDF283A77F000C855E0 /* FeedUIIntegrationTests.swift */,
 				123053252840B57000FD5558 /* Helpers */,
-				123053242840B56700FD5558 /* Controllers */,
 			);
 			path = FeedUI;
-			sourceTree = "<group>";
-		};
-		123053242840B56700FD5558 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				12B46FDF283A77F000C855E0 /* FeedUIIntegrationTests.swift */,
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		123053252840B57000FD5558 /* Helpers */ = {
