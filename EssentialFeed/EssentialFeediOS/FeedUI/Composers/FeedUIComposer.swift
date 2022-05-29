@@ -21,7 +21,6 @@ public final class FeedUIComposer {
 			feedView: FeedViewAdapter(controller: feedController, imageLoader: imageLoader),
 			loadingView: WeakRefVirtualProxy(feedController))
 
-
 		return feedController
 	}
 }
@@ -35,7 +34,6 @@ private extension FeedViewController {
 		feedController.title = title
 		return feedController
 	}
-
 }
 
 private final class WeakRefVirtualProxy<T: AnyObject> {
