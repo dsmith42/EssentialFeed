@@ -10,7 +10,15 @@ import UIKit
 import EssentialFeed
 import EssentialFeediOS
 
-final class FeedViewControllerTests: XCTestCase {
+final class FeedUIIntegrationTests: XCTestCase {
+
+	func test_feedView_hasTitle() {
+		let (sut, _) = makeSUT()
+
+		sut.loadViewIfNeeded()
+
+		XCTAssertEqual(sut.title, localized("FEED_VIEW_TITLE"))
+	}
 
 	func test_loadFeedActions_requestFeedFromLoader() throws {
 		let (sut, loader) = makeSUT()
@@ -248,6 +256,47 @@ final class FeedViewControllerTests: XCTestCase {
 		loader.completeImageLoading(with: anyImageData())
 
 		XCTAssertNil(view?.renderedImage, "Expected no rendered image when an image load finishes after the view is not visible anymore")
+	}
+
+	func test_loadFeedCompletion_dispatchesFromBackgroundToMainThread() {
+		let (sut, loader) = makeSUT()
+		sut.loadViewIfNeeded()
+
+		let exp = expectation(description: "Wait for background queue to complete")
+		DispatchQueue.global().async {
+			loader.completeFeedLoading(at: 0)
+			exp.fulfill()
+		}
+		wait(for: [exp], timeout: 1.0)
+	}
+
+	func test_loadImageDataCompletion_dispatchesFromBackgroundToMainThread() {
+		let (sut, loader) = makeSUT()
+
+		sut.loadViewIfNeeded()
+		loader.completeFeedLoading(with: [makeImage()])
+		_ = sut.simulateFeedImageViewVisible(at: 0)
+
+		let exp = expectation(description: "Wait for background queue to complete")
+		DispatchQueue.global().async {
+			loader.completeImageLoading(with: self.anyImageData(), at: 0)
+			exp.fulfill()
+		}
+		wait(for: [exp], timeout: 1.0)
+	}
+
+	func test_loadFeedCompletion_rendersErrorMessageOnErrorUntilNextReload() {
+		let (sut, loader) = makeSUT()
+
+		sut.loadViewIfNeeded()
+
+		XCTAssertEqual(sut.errorMessage, nil)
+
+		loader.completeFeedLoadingWithError(at: 0)
+		XCTAssertEqual(sut.errorMessage, localized("FEED_VIEW_CONNECTION_ERROR"))
+
+		sut.simulateUserInitiatedFeedReload()
+		XCTAssertEqual(sut.errorMessage, nil)
 	}
 
 	// MARK: - Helpers -
