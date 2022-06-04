@@ -42,7 +42,7 @@ public final class ErrorView: UIView {
 		}
 	}
 
-	private func hideMessageAnimated() {
+	@IBAction private func hideMessageAnimated() {
 		UIView.animate(
 			withDuration: 0.25,
 			animations: { self.alpha = 0 },
@@ -50,4 +50,5 @@ public final class ErrorView: UIView {
 				if completed { self.label.text = nil }
 			})
 	}
+
 }
