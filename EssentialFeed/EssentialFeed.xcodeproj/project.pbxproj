@@ -370,8 +370,8 @@
 				1230534228426AFF00FD5558 /* FeedImageViewModel.swift */,
 				12623CE22843592B0030EAC6 /* FeedLoadingViewModel.swift */,
 				12623CE4284359530030EAC6 /* FeedViewModel.swift */,
-				126F6ED32843BC8600CBC4DE /* Feed.strings */,
 				12D71A3A284B707900534434 /* FeedErrorViewModel.swift */,
+				126F6ED32843BC8600CBC4DE /* Feed.strings */,
 			);
 			path = FeedPresentation;
 			sourceTree = "<group>";
