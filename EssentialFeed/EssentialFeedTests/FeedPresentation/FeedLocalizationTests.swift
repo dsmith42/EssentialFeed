@@ -1,12 +1,12 @@
 //
 //  FeedLocalizationTests.swift
-//  EssentialFeediOSTests
+//  EssentialFeedTests
 //
 //  Created by Dan Smith on 29/05/2022.
 //
 
 import XCTest
-@testable import EssentialFeediOS
+import EssentialFeed
 
 final class FeedLocalizationTests: XCTestCase {
 	func test_localizationStrings_haveKeysAndValuesForAllSupportedLocalizations() {
