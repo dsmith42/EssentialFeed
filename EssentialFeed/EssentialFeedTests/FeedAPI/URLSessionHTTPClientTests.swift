@@ -13,8 +13,7 @@ class URLSessionHTTPClientTests: XCTestCase {
 	override func tearDown() {
 		URLProtocolStub.removeStub()
 	}
-	
-	
+
 	func test_getFromURL_performsGetRequestFromURL() throws {
 		let url = anyURL()
 		let exp = expectation(description: "Wait for request")
@@ -94,7 +93,7 @@ class URLSessionHTTPClientTests: XCTestCase {
 		let result = resultFor(values, file: file, line: line)
 
 		switch result {
-		case let .success(data, response):
+		case let .success((data, response)):
 			return (data, response)
 		default:
 			XCTFail("Expected success, got \(result) instead", file: file, line: line)
