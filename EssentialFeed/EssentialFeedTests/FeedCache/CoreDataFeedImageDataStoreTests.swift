@@ -24,7 +24,7 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
 	func test_retrieveImageData_deliversNotFoundWhenEmpty() {
 		let sut = makeSUT()
 
-		expect(sut, toCompleteRevrievalWith: .success(.none), for: anyURL())
+		expect(sut, toCompleteRevrievalWith: notFound(), for: anyURL())
 	}
 
 	// MARK: - Helpers
@@ -36,6 +36,10 @@ final class CoreDataFeedImageDataStoreTests: XCTestCase {
 		trackForMemoryLeaks(sut)
 
 		return sut
+	}
+
+	func notFound() -> FeedImageDataStore.RetrievalResult {
+		return .success(.none)
 	}
 
 	func expect(_ sut: FeedImageDataStore, toCompleteRevrievalWith expectedResult: FeedImageDataStore.RetrievalResult, for url: URL, file: StaticString = #file, line: UInt = #line) {
