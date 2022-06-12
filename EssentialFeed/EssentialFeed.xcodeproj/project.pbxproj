@@ -513,13 +513,13 @@
 			children = (
 				12C769F72854CB4F0082B8E1 /* CacheFeedImageDataUseCaseTests.swift */,
 				126327B127DF58C10047B02E /* CacheFeedUseCaseTests.swift */,
+				12C769FA2855587A0082B8E1 /* CoreDataFeedImageDataStoreTests.swift */,
 				12B0030227F0D46300097392 /* CoreDataFeedStoreTests.swift */,
 				12FB7E5927DFA8E20054F142 /* LoadFeedFromCacheUseCaseTests.swift */,
 				1213CD21284D1BA700A7C8B6 /* LoadFeedImageDataFromCacheUseCaseTests.swift */,
 				125CB15027E781E50056B26F /* ValidateFeedCacheUseCaseTests.swift */,
 				12B0030127F0D39800097392 /* FeedStoreSpecs */,
 				12FB7E5B27DFAA1D0054F142 /* Helpers */,
-				12C769FA2855587A0082B8E1 /* CoreDataFeedImageDataStoreTests.swift */,
 			);
 			path = FeedCache;
 			sourceTree = "<group>";
@@ -586,11 +586,11 @@
 			isa = PBXGroup;
 			children = (
 				12B0030427F0DE5300097392 /* CoreDataFeedStore.swift */,
+				12C769FD2855673C0082B8E1 /* CoreDataFeedStore+FeedImageDataLoader.swift */,
 				12BEA8BE280DD1A5002BE876 /* CoreDataHelpers.swift */,
 				12BEA8C0280DD2CB002BE876 /* ManagedCache.swift */,
 				12BEA8C2280DD329002BE876 /* ManagedImage.swift */,
 				12D222B927FC68970006987C /* FeedStore.xcdatamodeld */,
-				12C769FD2855673C0082B8E1 /* CoreDataFeedStore+FeedImageDataLoader.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
