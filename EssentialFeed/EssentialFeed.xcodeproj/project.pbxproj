@@ -502,10 +502,10 @@
 				1213CD1E284CDF7300A7C8B6 /* Helpers */,
 				1229060327C298CA0096F54E /* FeedItemsMapper.swift */,
 				122905FD27C26A8C0096F54E /* HTTPClient.swift */,
+				1213CD19284CD33900A7C8B6 /* RemoteFeedImageDataLoader.swift */,
 				126327B827DF957F0047B02E /* RemoteFeedItem.swift */,
 				12466A1F27C11C2C009D25E3 /* RemoteFeedLoader.swift */,
 				125E00EA27CB7E00009270E9 /* URLSessionHTTPClient.swift */,
-				1213CD19284CD33900A7C8B6 /* RemoteFeedImageDataLoader.swift */,
 			);
 			path = FeedAPI;
 			sourceTree = "<group>";
@@ -589,11 +589,11 @@
 			children = (
 				12B0030427F0DE5300097392 /* CoreDataFeedStore.swift */,
 				12C769FD2855673C0082B8E1 /* CoreDataFeedStore+FeedImageDataLoader.swift */,
+				12B98176285F618200E2B254 /* CoreDataFeedStore+FeedStore.swift */,
 				12BEA8BE280DD1A5002BE876 /* CoreDataHelpers.swift */,
 				12BEA8C0280DD2CB002BE876 /* ManagedCache.swift */,
 				12BEA8C2280DD329002BE876 /* ManagedImage.swift */,
 				12D222B927FC68970006987C /* FeedStore.xcdatamodeld */,
-				12B98176285F618200E2B254 /* CoreDataFeedStore+FeedStore.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
