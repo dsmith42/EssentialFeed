@@ -114,10 +114,10 @@
 		125A6F34288494B100B71698 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				125A6F35288494CB00B71698 /* XCTestCase+MemoryLeakTracking.swift */,
-				125A6F372884954F00B71698 /* SharedTestHelpers.swift */,
 				125A6F3B288571F500B71698 /* FeedLoaderStub.swift */,
+				125A6F372884954F00B71698 /* SharedTestHelpers.swift */,
 				125A6F3D2885741400B71698 /* XCTestCase+FeedLoader.swift */,
+				125A6F35288494CB00B71698 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
