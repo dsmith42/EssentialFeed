@@ -26,7 +26,16 @@ final class FeedImageDataLoaderDecoratorTests: XCTestCase {
 	func test_init_doesNotLoadImageData() {
 		let (_, loader) = makeSUT()
 
-		XCTAssertTrue(loader.loadedURLs.isEmpty)
+		XCTAssertTrue(loader.loadedURLs.isEmpty, "Expected no loaded URLs")
+	}
+
+	func test_loadImageData_loadsFromLoader() {
+		let (sut, loader) = makeSUT()
+		let url = anyURL()
+
+		_ = sut.loadImageData(from: url) { _ in }
+
+		XCTAssertEqual(loader.loadedURLs, [url], "Expected to load URL from loader")
 	}
 
 	// MARK: - Helpers
