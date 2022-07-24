@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			.appendingPathComponent("feed-store.sqlite")
 
 		if CommandLine.arguments.contains("-reset") {
-			try? FileManager.default.eremoveItem(at: LocalFeedImageDataLoader)
+			try? FileManager.default.removeItem(at: LocalFeedImageDataLoader)
 		}
 
 		let localStore = try! CoreDataFeedStore(storeURL: localFeedStore)
