@@ -12,16 +12,16 @@ import EssentialFeediOS
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
-	let localFeedStoreURL = NSPersistentContainer
-		.defaultDirectoryURL()
-		.appendingPathComponent("feed-store.sqlite")
 
 	private lazy var httpClient: HTTPClient = {
 		URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
 	}()
 
 	private lazy var feedStore: FeedStore & FeedImageDataStore = {
-		try! CoreDataFeedStore.init(storeURL: localFeedStoreURL)
+		try! CoreDataFeedStore.init(
+			storeURL: NSPersistentContainer
+				.defaultDirectoryURL()
+				.appendingPathComponent("feed-store.sqlite"))
 	}()
 
 	convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
@@ -39,9 +39,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func configureWindow() {
 		let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
 
-		let remoteClient = makeRemoteClient()
-		let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: remoteClient)
-		let remoteImageLoader = RemoteFeedImageDataLoader(client: remoteClient)
+		let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: httpClient)
+		let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
 
 		let localFeedLoader = LocalFeedLoader(store: feedStore, currentDate: Date.init)
 		let localImageLoader = LocalFeedImageDataLoader(store: feedStore)
@@ -56,11 +55,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				primary: localImageLoader,
 				fallback: FeedImageDataLoaderDecorator(decoratee: remoteImageLoader,
 																							 cache: localImageLoader))))
-			}
-	// MARK: - Helpers
-
-	func makeRemoteClient() -> HTTPClient {
-		return httpClient
 	}
 
 }
