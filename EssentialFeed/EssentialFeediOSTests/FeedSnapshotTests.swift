@@ -30,7 +30,7 @@ class FeedSnapshotTests: XCTestCase {
 	func test_feedWithErrorMessage() {
 		let sut = makeSUT()
 
-		sut.display(.error(message: "An error message"))
+		sut.display(.error(message: "This is a\nmulti-line\nerror message"))
 
 		record(snapshot: sut.snapshot(), named: "FEED_WITH_ERROR_MESSAGE")
 	}
