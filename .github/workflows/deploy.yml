@@ -12,16 +12,13 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
-
-      - name: Set environment variables from project settings
-        uses: allenevans/set-env@v2.0.0
-        with:
-          PRODUCT_NAME: 'EssentialApp'
-        
+   
       - name: Import signing certificate
         env:
           SIGNING_CERTIFICATE_P12_DATA: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
           SIGNING_CERTIFICATE_PASSWORD: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+          PRODUCT_NAME: 'EssentialApp'
+      
         run: |
           exec .github/scripts/import-certificate.sh
       - name: Import provisioning profile
@@ -43,7 +40,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ env.PRODUCT_NAME }}.ipa
+            ${{ env.PRODUCT_NAME.ipa
             ${{ env.PRODUCT_NAME }}.app.dSYM.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
