@@ -40,7 +40,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ env.PRODUCT_NAME.ipa
+            ${{ env.PRODUCT_NAME }}.ipa
             ${{ env.PRODUCT_NAME }}.app.dSYM.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
