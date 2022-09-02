@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 import CoreData
 import EssentialFeed
 import EssentialFeediOS
@@ -28,6 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		LocalFeedLoader(store: feedStore, currentDate: Date.init)
 	}()
 
+	private lazy var remoteFeedLoader: RemoteFeedLoader = {
+		let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
+		return RemoteFeedLoader(url: remoteURL, client: httpClient)
+	}()
+
 	convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
 		self.init()
 		self.httpClient = httpClient
@@ -43,28 +49,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func configureWindow() {
-		let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-
-		let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: httpClient)
-		let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
-
-		let localFeedLoader = LocalFeedLoader(store: feedStore, currentDate: Date.init)
-		let localImageLoader = LocalFeedImageDataLoader(store: feedStore)
-
-		window?.rootViewController =
-		UINavigationController(rootViewController: FeedUIComposer.feedComposedWith(
-			feedLoader: FeedLoaderWithFallbackComposite(
-				primary: FeedLoaderCacheDecorator(decoratee: remoteFeedLoader,
-																					cache: localFeedLoader),
-				fallback: localFeedLoader),
-			imageLoader: FeedImageDataLoaderWithFallbackComposite(
-				primary: localImageLoader,
-				fallback: FeedImageDataLoaderDecorator(decoratee: remoteImageLoader,
-																							 cache: localImageLoader))))
-		window?.makeKeyAndVisible()
+		window?.rootViewController = UINavigationController(
+			rootViewController: FeedUIComposer.feedComposedWith(
+				feedLoader: makeRemoteFeedLoaderWithLocalFallback,
+				imageLoader: makeLocalImageLoaderWithRemoteFallback))
+			window?.makeKeyAndVisible()
 	}
 
 	func sceneWillResignActive(_ scene: UIScene) {
 		localFeedLoader.validateCache { _ in }
+	}
+
+	func makeRemoteFeedLoaderWithLocalFallback() -> FeedLoader.Publisher {
+		remoteFeedLoader
+			.loadPublisher()
+			.caching(to: localFeedLoader)
+			.fallback(to: localFeedLoader.loadPublisher)
+	}
+
+	private func makeLocalImageLoaderWithRemoteFallback(url: URL) -> FeedImageDataLoader.Publisher {
+		let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
+		let localImageLoader = LocalFeedImageDataLoader(store: feedStore)
+		return localImageLoader
+			.loadImageDataPublisher(from: url)
+			.fallback(to: {
+				remoteImageLoader
+					.loadImageDataPublisher(from: url)
+					.caching(to: localImageLoader, using: url)
+			})
+
 	}
 }
