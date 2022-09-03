@@ -73,6 +73,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 					.loadImageDataPublisher(from: url)
 					.caching(to: localImageLoader, using: url)
 			})
-
 	}
+
 }
