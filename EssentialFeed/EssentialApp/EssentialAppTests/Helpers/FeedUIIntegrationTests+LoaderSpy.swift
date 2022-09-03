@@ -31,9 +31,7 @@ extension FeedUIIntegrationTests {
 			feedRequests[index].send(completion: .failure(error))
 		}
 
-		typealias Publisher = AnyPublisher<[FeedImage], Error>
-
-		func loadPublisher() -> Publisher {
+		func loadPublisher() -> AnyPublisher<[FeedImage], Error> {
 			let publisher = PassthroughSubject<[FeedImage], Error>()
 			feedRequests.append(publisher)
 			return publisher.eraseToAnyPublisher()
