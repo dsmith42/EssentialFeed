@@ -8,29 +8,35 @@
 import Foundation
 import EssentialFeed
 import EssentialFeediOS
+import Combine
 
 extension FeedUIIntegrationTests {
 
-	class LoaderSpy: FeedLoader, FeedImageDataLoader {
+	class LoaderSpy: FeedImageDataLoader {
 
 		// MARK: - FeedLoader -
 
-		private var feedRequests = [(FeedLoader.Result) -> Void]()
+		private var feedRequests = [PassthroughSubject<[FeedImage], Error>]()
 
 		var loadFeedCallCount: Int {
 			return feedRequests.count
 		}
 
-		func load(completion: @escaping (FeedLoader.Result) -> Void) {
-			feedRequests.append(completion)
-		}
-
 		func completeFeedLoading(with feed: [FeedImage] = [], at index: Int = 0) {
-			feedRequests[index](.success(feed))
+			feedRequests[index].send(feed)
 		}
 
 		func completeFeedLoadingWithError(at index: Int = 0 ) {
-			feedRequests[index](.failure(anyNSError()))
+			let error = anyNSError()
+			feedRequests[index].send(completion: .failure(error))
+		}
+
+		typealias Publisher = AnyPublisher<[FeedImage], Error>
+
+		func loadPublisher() -> Publisher {
+			let publisher = PassthroughSubject<[FeedImage], Error>()
+			feedRequests.append(publisher)
+			return publisher.eraseToAnyPublisher()
 		}
 
 		// MARK: - FeedImageDataLoader -
