@@ -40,7 +40,7 @@ public final class FeedPresenter {
 	}
 
 	public static var feedLoadError: String {
-		NSLocalizedString("FEED_VIEW_CONNECTION_ERROR",
+		NSLocalizedString("GENERIC_VIEW_CONNECTION_ERROR",
 											tableName: "Feed",
 											bundle: Bundle(for: FeedPresenter.self),
 											comment: "Error message displayed when we can't load the image feed from the server")
