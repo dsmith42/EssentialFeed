@@ -1,5 +1,5 @@
 //
-//  FeedLoadingViewModel.swift
+//  ResourceLoadingViewModel.swift
 //  EssentialFeed
 //
 //  Created by Dan Smith on 04/06/2022.
