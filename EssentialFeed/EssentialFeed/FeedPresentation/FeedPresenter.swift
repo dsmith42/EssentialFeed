@@ -7,10 +7,6 @@
 
 import Foundation
 
-public protocol FeedLoadingView {
-	func display(_ viewModel: FeedLoadingViewModel)
-}
-
 public protocol FeedErrorView {
 	func display(_ viewModel: FeedErrorViewModel)
 }
@@ -21,12 +17,12 @@ public protocol FeedView {
 
 public final class FeedPresenter {
 	var errorView: FeedErrorView
-	var loadingView: FeedLoadingView
+	var loadingView: ResourceLoadingView
 	var feedView: FeedView
 
 	public init(feedView: FeedView,
 			 errorView: FeedErrorView,
-			 loadingView: FeedLoadingView) {
+			 loadingView: ResourceLoadingView) {
 		self.feedView = feedView
 		self.errorView = errorView
 		self.loadingView = loadingView
@@ -48,16 +44,16 @@ public final class FeedPresenter {
 
 	public func didStartLoadingFeed() {
 		errorView.display(.noError)
-		loadingView.display(FeedLoadingViewModel(isLoading: true))
+		loadingView.display(ResourceLoadingViewModel(isLoading: true))
 	}
 
 	public func didFinishLoadingFeed(with feed: [FeedImage]) {
 		feedView.display(FeedViewModel(feed: feed))
-		loadingView.display(FeedLoadingViewModel(isLoading: false))
+		loadingView.display(ResourceLoadingViewModel(isLoading: false))
 	}
 
 	public func didFinishLoadingFeed(with error: Error) {
-		loadingView.display(FeedLoadingViewModel(isLoading: false))
+		loadingView.display(ResourceLoadingViewModel(isLoading: false))
 		errorView.display(.error(message: FeedPresenter.feedLoadError))
 	}
 
