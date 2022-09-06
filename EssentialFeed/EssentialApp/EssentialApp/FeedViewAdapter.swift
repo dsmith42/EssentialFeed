@@ -10,7 +10,7 @@ import EssentialFeed
 import EssentialFeediOS
 
 final class FeedViewAdapter: ResourceView {
-	private weak var controller: FeedViewController?
+	private weak var controller: ListViewController?
 	private var imageLoader: (URL) -> FeedImageDataLoader.Publisher
 
 	private typealias ImageDataPresentationAdapter = LoadResourcePresentationAdapter<Data, WeakRefVirtualProxy<FeedImageCellController>>
