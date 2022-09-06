@@ -61,6 +61,10 @@
 		1264909B28C7329900617543 /* ImageCommentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1264909A28C7329900617543 /* ImageCommentsPresenter.swift */; };
 		1264909F28C7344400617543 /* ImageCommentsLocalizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1264909E28C7344400617543 /* ImageCommentsLocalizationTests.swift */; };
 		126490A028C734AE00617543 /* ImageComments.strings in Resources */ = {isa = PBXBuildFile; fileRef = 126490A228C734AE00617543 /* ImageComments.strings */; };
+		126490BD28C78CD900617543 /* ListSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126490BC28C78CD900617543 /* ListSnapshotTests.swift */; };
+		126490BF28C78D8E00617543 /* snapshots in Resources */ = {isa = PBXBuildFile; fileRef = 126490BE28C78D8E00617543 /* snapshots */; };
+		126490C328C78DA300617543 /* EMPTY_LIST_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 126490C128C78DA300617543 /* EMPTY_LIST_light.png */; };
+		126490C428C78DA300617543 /* EMPTY_LIST_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 126490C228C78DA300617543 /* EMPTY_LIST_dark.png */; };
 		126EAF8E28C3D32000178179 /* LoadResourcePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126EAF8D28C3D32000178179 /* LoadResourcePresenterTests.swift */; };
 		127DB1D927CB813C006B9997 /* EssentialFeedAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127DB1D827CB813C006B9997 /* EssentialFeedAPIEndToEndTests.swift */; };
 		127DB1DA27CB813C006B9997 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12466A0027C10339009D25E3 /* EssentialFeed.framework */; };
@@ -218,6 +222,12 @@
 		126490A328C734AF00617543 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/ImageComments.strings; sourceTree = "<group>"; };
 		126490A428C734B100617543 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/ImageComments.strings; sourceTree = "<group>"; };
 		126490A528C734B100617543 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/ImageComments.strings"; sourceTree = "<group>"; };
+		126490BC28C78CD900617543 /* ListSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSnapshotTests.swift; sourceTree = "<group>"; };
+		126490BE28C78D8E00617543 /* snapshots */ = {isa = PBXFileReference; lastKnownFileType = folder; path = snapshots; sourceTree = "<group>"; };
+		126490C128C78DA300617543 /* EMPTY_LIST_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EMPTY_LIST_light.png; sourceTree = "<group>"; };
+		126490C228C78DA300617543 /* EMPTY_LIST_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EMPTY_LIST_dark.png; sourceTree = "<group>"; };
+		126490C528C78ED500617543 /* LIST_WITH_ERROR_MESSAGE_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LIST_WITH_ERROR_MESSAGE_dark.png; sourceTree = "<group>"; };
+		126490C628C78ED500617543 /* LIST_WITH_ERROR_MESSAGE_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LIST_WITH_ERROR_MESSAGE_light.png; sourceTree = "<group>"; };
 		126EAF8D28C3D32000178179 /* LoadResourcePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadResourcePresenterTests.swift; sourceTree = "<group>"; };
 		126F6ED72843BE1800CBC4DE /* FeedLocalizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLocalizationTests.swift; sourceTree = "<group>"; };
 		127DB1D627CB813C006B9997 /* EssentialFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -466,8 +476,9 @@
 		1249162828929E0E0028F96F /* EssentialFeediOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				126490BB28C78C7900617543 /* SharedUI */,
+				126490BA28C78C6F00617543 /* FeedUI */,
 				124916312892A67D0028F96F /* Helpers */,
-				1249162928929E0E0028F96F /* FeedSnapshotTests.swift */,
 			);
 			path = EssentialFeediOSTests;
 			sourceTree = "<group>";
@@ -621,6 +632,35 @@
 				124916342892A81D0028F96F /* UITableView+HeaderSizing.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		126490BA28C78C6F00617543 /* FeedUI */ = {
+			isa = PBXGroup;
+			children = (
+				126490BE28C78D8E00617543 /* snapshots */,
+				1249162928929E0E0028F96F /* FeedSnapshotTests.swift */,
+			);
+			path = FeedUI;
+			sourceTree = "<group>";
+		};
+		126490BB28C78C7900617543 /* SharedUI */ = {
+			isa = PBXGroup;
+			children = (
+				126490C028C78D9300617543 /* snapshots */,
+				126490BC28C78CD900617543 /* ListSnapshotTests.swift */,
+			);
+			path = SharedUI;
+			sourceTree = "<group>";
+		};
+		126490C028C78D9300617543 /* snapshots */ = {
+			isa = PBXGroup;
+			children = (
+				126490C228C78DA300617543 /* EMPTY_LIST_dark.png */,
+				126490C128C78DA300617543 /* EMPTY_LIST_light.png */,
+				126490C528C78ED500617543 /* LIST_WITH_ERROR_MESSAGE_dark.png */,
+				126490C628C78ED500617543 /* LIST_WITH_ERROR_MESSAGE_light.png */,
+			);
+			path = snapshots;
 			sourceTree = "<group>";
 		};
 		126EAF8C28C3D30200178179 /* SharedPresentation */ = {
@@ -961,6 +1001,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				126490C428C78DA300617543 /* EMPTY_LIST_dark.png in Resources */,
+				126490C328C78DA300617543 /* EMPTY_LIST_light.png in Resources */,
+				126490BF28C78D8E00617543 /* snapshots in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,6 +1126,7 @@
 			files = (
 				1249162A28929E0E0028F96F /* FeedSnapshotTests.swift in Sources */,
 				124916372892CC680028F96F /* UIViewController+Snapshot.swift in Sources */,
+				126490BD28C78CD900617543 /* ListSnapshotTests.swift in Sources */,
 				124916392892CCE40028F96F /* XCTestCase+Snapshot.swift in Sources */,
 				124916332892A6960028F96F /* UIImage+TestHelpers.swift in Sources */,
 			);
