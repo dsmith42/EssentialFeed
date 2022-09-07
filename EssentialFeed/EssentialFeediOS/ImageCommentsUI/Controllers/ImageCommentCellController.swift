@@ -17,7 +17,11 @@ public final class ImageCommentCellController: CellController {
 	}
 
 	public func view(in tableView: UITableView) -> UITableViewCell {
-		UITableViewCell()
+		let cell: ImageCommentCell = tableView.dequeueReusableCell()
+		cell.usernameLabel.text = model.username
+		cell.dateLabel.text = model.date
+		cell.messageLabel.text = model.message
+		return cell
 	}
 
 	public func preload() {
