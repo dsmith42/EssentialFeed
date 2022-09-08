@@ -8,13 +8,23 @@
 import UIKit
 import EssentialFeediOS
 
-extension FeedViewController {
+extension ListViewController {
+	override public func loadViewIfNeeded() {
+		super.loadViewIfNeeded()
+
+		tableView.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+	}
+
 	var isShowingLoadingIndicator: Bool {
 		refreshControl?.isRefreshing == true
 	}
 
 	func simulateUserInitiatedFeedReload() {
 		refreshControl?.simulatePullToRefresh()
+	}
+
+	func simulateErrorViewTap() {
+		errorView.simulateTap()
 	}
 
 	@discardableResult
@@ -61,7 +71,7 @@ extension FeedViewController {
 	}
 
 	func numberOfRenderedFeedImageViews() -> Int {
-		return tableView.numberOfRows(inSection: feedImagesSection)
+		tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
 	}
 
 	private var feedImagesSection: Int {
@@ -69,6 +79,6 @@ extension FeedViewController {
 	}
 
 	var errorMessage: String? {
-		return errorView?.message
+		return errorView.message
 	}
 }
