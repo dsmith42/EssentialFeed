@@ -17,6 +17,10 @@ extension ListViewController {
 		refreshControl?.simulatePullToRefresh()
 	}
 
+	func simulateErrorViewTap() {
+		errorView.simulateTap()
+	}
+
 	@discardableResult
 	func simulateFeedImageViewVisible(at index: Int = 0) -> FeedImageCell? {
 		return feedImageView(at: index) as? FeedImageCell
@@ -69,6 +73,6 @@ extension ListViewController {
 	}
 
 	var errorMessage: String? {
-		return errorView?.message
+		return errorView.message
 	}
 }
