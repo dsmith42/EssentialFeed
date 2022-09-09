@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import EssentialFeediOS
+@testable import EssentialFeediOS
 
 extension ListViewController {
 	override public func loadViewIfNeeded() {
@@ -26,6 +26,14 @@ extension ListViewController {
 	func simulateErrorViewTap() {
 		errorView.simulateTap()
 	}
+
+	var errorMessage: String? {
+		return errorView.message
+	}
+
+}
+
+extension ListViewController {
 
 	@discardableResult
 	func simulateFeedImageViewVisible(at index: Int = 0) -> FeedImageCell? {
@@ -78,7 +86,36 @@ extension ListViewController {
 		return 0
 	}
 
-	var errorMessage: String? {
-		return errorView.message
+}
+
+extension ListViewController {
+	func numberOfRenderedComments() -> Int {
+		tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: commentsSection)
 	}
+
+	private var commentsSection: Int {
+		return 0
+	}
+
+	private func commentView(at row: Int) -> ImageCommentCell? {
+		guard numberOfRenderedComments() > row else {
+			return nil
+		}
+		let ds = tableView.dataSource
+		let indexPath = IndexPath(row: row, section: commentsSection)
+		return ds?.tableView(tableView, cellForRowAt: indexPath) as? ImageCommentCell
+	}
+
+	func commentMessage(at row: Int) -> String? {
+		return commentView(at: row)?.messageLabel.text
+	}
+
+	func commentDate(at row: Int) -> String? {
+		return commentView(at: row)?.dateLabel.text
+	}
+
+	func commentUsername(at row: Int) -> String? {
+		return commentView(at: row)?.usernameLabel.text
+	}
+
 }
