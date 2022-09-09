@@ -29,6 +29,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		LocalFeedLoader(store: feedStore, currentDate: Date.init)
 	}()
 
+	private lazy var navigationController = UINavigationController(
+			rootViewController: FeedUIComposer.feedComposedWith(
+				feedLoader: makeRemoteFeedLoaderWithLocalFallback,
+				imageLoader: makeLocalImageLoaderWithRemoteFallback,
+				selection: showComments))
+
+	private lazy var baseURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed")!
+
 	convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
 		self.init()
 		self.httpClient = httpClient
@@ -44,19 +52,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func configureWindow() {
-		window?.rootViewController = UINavigationController(
-			rootViewController: FeedUIComposer.feedComposedWith(
-				feedLoader: makeRemoteFeedLoaderWithLocalFallback,
-				imageLoader: makeLocalImageLoaderWithRemoteFallback))
-			window?.makeKeyAndVisible()
+		window?.rootViewController = navigationController
+		window?.makeKeyAndVisible()
 	}
 
 	func sceneWillResignActive(_ scene: UIScene) {
 		localFeedLoader.validateCache { _ in }
 	}
 
-	func makeRemoteFeedLoaderWithLocalFallback() -> AnyPublisher<[FeedImage], Error> {
-		let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
+	private func makeRemoteFeedLoaderWithLocalFallback() -> AnyPublisher<[FeedImage], Error> {
+		let remoteURL = baseURL.appendingPathComponent("/v1/feed")
 		return httpClient.getPublisher(with: remoteURL)
 			.tryMap(FeedItemsMapper.map)
 			.caching(to: localFeedLoader)
@@ -73,6 +78,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 					.tryMap(FeedImageDataMapper.map)
 					.caching(to: localImageLoader, using: url)
 			})
+	}
+
+	private func showComments(for image: FeedImage) {
+		let url = baseURL.appendingPathComponent("/v1/image/\(image.id)/comments")
+		let comments = CommentsUIComposer.commentsComposedWith(commentsLoader: makeRemoteCommentsLoader(url: url))
+		navigationController.pushViewController(comments, animated: true)
+	}
+
+	private func makeRemoteCommentsLoader(url: URL) -> () -> AnyPublisher<[ImageComment], Error> {
+		return { [httpClient] in
+			return httpClient
+				.getPublisher(with: url)
+				.tryMap(ImageCommentsMapper.map)
+				.eraseToAnyPublisher()
+		}
 	}
 
 }
