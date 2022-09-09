@@ -11,7 +11,7 @@ import EssentialFeed
 import EssentialApp
 import EssentialFeediOS
 
-public class FeedUIIntegrationTests: XCTestCase {
+class FeedUIIntegrationTests: XCTestCase {
 
 	func test_feedView_hasTitle() {
 		let (sut, _) = makeSUT()
@@ -28,10 +28,10 @@ public class FeedUIIntegrationTests: XCTestCase {
 		sut.loadViewIfNeeded()
 		XCTAssertEqual(loader.loadFeedCallCount, 1, "Expected loading request once view is loaded")
 
-		sut.refreshControl?.simulatePullToRefresh()
+		sut.simulateUserInitiatedReload()
 		XCTAssertEqual(loader.loadFeedCallCount, 2, "Expected another loading request once user initiates a reload")
 
-		sut.refreshControl?.simulatePullToRefresh()
+		sut.simulateUserInitiatedReload()
 		XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected yet another loading request once user initiates another reload")
 	}
 
@@ -44,7 +44,7 @@ public class FeedUIIntegrationTests: XCTestCase {
 		loader.completeFeedLoading(at: 0)
 		XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator onece loading completes successfully")
 
-		sut.simulateUserInitiatedFeedReload()
+		sut.simulateUserInitiatedReload()
 		XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once user initiates a reload")
 
 		loader.completeFeedLoadingWithError(at: 1)
@@ -64,7 +64,7 @@ public class FeedUIIntegrationTests: XCTestCase {
 		loader.completeFeedLoading(with: [image0], at: 0)
 		assertThat(sut, isRendering: [image0])
 
-		sut.simulateUserInitiatedFeedReload()
+		sut.simulateUserInitiatedReload()
 		loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
 		assertThat(sut, isRendering: [image0, image1, image2, image3])
 	}
@@ -78,7 +78,7 @@ public class FeedUIIntegrationTests: XCTestCase {
 		loader.completeFeedLoading(with: [image0, image1], at: 0)
 		assertThat(sut, isRendering: [image0, image1])
 
-		sut.simulateUserInitiatedFeedReload()
+		sut.simulateUserInitiatedReload()
 		loader.completeFeedLoading(with: [], at: 1)
 		assertThat(sut, isRendering: [])
 	}
@@ -91,7 +91,7 @@ public class FeedUIIntegrationTests: XCTestCase {
 		loader.completeFeedLoading(with: [image0], at: 0)
 		assertThat(sut, isRendering: [image0])
 
-		sut.simulateUserInitiatedFeedReload()
+		sut.simulateUserInitiatedReload()
 		loader.completeFeedLoadingWithError()
 		assertThat(sut, isRendering: [image0])
 	}
@@ -310,7 +310,7 @@ public class FeedUIIntegrationTests: XCTestCase {
 		loader.completeFeedLoadingWithError(at: 0)
 		XCTAssertEqual(sut.errorMessage, loadError)
 
-		sut.simulateUserInitiatedFeedReload()
+		sut.simulateUserInitiatedReload()
 		XCTAssertEqual(sut.errorMessage, nil)
 	}
 
@@ -330,7 +330,7 @@ public class FeedUIIntegrationTests: XCTestCase {
 
 	// MARK: - Helpers -
 
-	private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
+	private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
 		let loader = LoaderSpy()
 		let sut = FeedUIComposer.feedComposedWith(feedLoader: loader.loadPublisher, imageLoader: loader.loadImageDataPublisher)
 		trackForMemoryLeaks(loader, file: file, line: line)
