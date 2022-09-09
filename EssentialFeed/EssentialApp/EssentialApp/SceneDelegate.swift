@@ -62,7 +62,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private func makeRemoteFeedLoaderWithLocalFallback() -> AnyPublisher<[FeedImage], Error> {
 		let remoteURL = baseURL.appendingPathComponent("/v1/feed")
-		return httpClient.getPublisher(with: remoteURL)
+		return httpClient.getPublisher(url: remoteURL)
 			.tryMap(FeedItemsMapper.map)
 			.caching(to: localFeedLoader)
 			.fallback(to: localFeedLoader.loadPublisher)
@@ -74,7 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			.loadImageDataPublisher(from: url)
 			.fallback(to: { [httpClient] in
 				httpClient
-					.getPublisher(with: url)
+					.getPublisher(url: url)
 					.tryMap(FeedImageDataMapper.map)
 					.caching(to: localImageLoader, using: url)
 			})
@@ -89,7 +89,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	private func makeRemoteCommentsLoader(url: URL) -> () -> AnyPublisher<[ImageComment], Error> {
 		return { [httpClient] in
 			return httpClient
-				.getPublisher(with: url)
+				.getPublisher(url: url)
 				.tryMap(ImageCommentsMapper.map)
 				.eraseToAnyPublisher()
 		}
