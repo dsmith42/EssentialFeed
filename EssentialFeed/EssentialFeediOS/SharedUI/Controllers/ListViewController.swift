@@ -81,7 +81,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
 		refreshControl?.update(isRefreshing: viewModel.isLoading)
 	}
 
-	public func display(_ viewModel: ResourceErrorViewModel) {
+	public func display(_ viewModel: ResourceErrorViewModel) { 
 		errorView.message = viewModel.message
 	}
 
