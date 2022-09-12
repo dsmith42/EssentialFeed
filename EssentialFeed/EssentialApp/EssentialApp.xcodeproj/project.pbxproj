@@ -21,6 +21,7 @@
 		127E86A1287B5164008DB389 /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 127E869E287B5164008DB389 /* EssentialFeed.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		127E86A2287B5164008DB389 /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 127E869F287B5164008DB389 /* EssentialFeediOS.framework */; };
 		127E86A3287B5164008DB389 /* EssentialFeediOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 127E869F287B5164008DB389 /* EssentialFeediOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		12A1485E28CF5C95000E4E90 /* NullStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1485D28CF5C95000E4E90 /* NullStore.swift */; };
 		12B98185285FE5FE00E2B254 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B98184285FE5FE00E2B254 /* AppDelegate.swift */; };
 		12B98187285FE5FE00E2B254 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B98186285FE5FE00E2B254 /* SceneDelegate.swift */; };
 		12B98189285FE5FE00E2B254 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B98188285FE5FE00E2B254 /* ViewController.swift */; };
@@ -81,6 +82,7 @@
 		127D57BD28CB1E87005187A9 /* CommentsUIIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsUIIntegrationTests.swift; sourceTree = "<group>"; };
 		127E869E287B5164008DB389 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		127E869F287B5164008DB389 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		12A1485D28CF5C95000E4E90 /* NullStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullStore.swift; sourceTree = "<group>"; };
 		12B98181285FE5FE00E2B254 /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12B98184285FE5FE00E2B254 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12B98186285FE5FE00E2B254 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -179,17 +181,18 @@
 		12B98183285FE5FE00E2B254 /* EssentialApp */ = {
 			isa = PBXGroup;
 			children = (
-				12B98184285FE5FE00E2B254 /* AppDelegate.swift */,
-				12B98186285FE5FE00E2B254 /* SceneDelegate.swift */,
-				125934EF28C25179007F7E99 /* CombineHelpers.swift */,
-				12B98188285FE5FE00E2B254 /* ViewController.swift */,
 				12B9818D285FE5FF00E2B254 /* Assets.xcassets */,
-				12B9818F285FE5FF00E2B254 /* LaunchScreen.storyboard */,
 				12B98192285FE5FF00E2B254 /* Info.plist */,
-				12CBEC522891F89D00AB402F /* LoadResourcePresentationAdapter.swift */,
-				12CBEC552891F89D00AB402F /* FeedUIComposer.swift */,
+				12B98184285FE5FE00E2B254 /* AppDelegate.swift */,
+				125934EF28C25179007F7E99 /* CombineHelpers.swift */,
 				127D57BB28CB1DE0005187A9 /* CommentsUIComposer.swift */,
+				12CBEC552891F89D00AB402F /* FeedUIComposer.swift */,
 				12CBEC532891F89D00AB402F /* FeedViewAdapter.swift */,
+				12B9818F285FE5FF00E2B254 /* LaunchScreen.storyboard */,
+				12CBEC522891F89D00AB402F /* LoadResourcePresentationAdapter.swift */,
+				12A1485D28CF5C95000E4E90 /* NullStore.swift */,
+				12B98186285FE5FE00E2B254 /* SceneDelegate.swift */,
+				12B98188285FE5FE00E2B254 /* ViewController.swift */,
 				12CBEC562891F89D00AB402F /* WeakRefVirtualProxy.swift */,
 			);
 			path = EssentialApp;
@@ -310,6 +313,7 @@
 			files = (
 				12B98189285FE5FE00E2B254 /* ViewController.swift in Sources */,
 				12B98185285FE5FE00E2B254 /* AppDelegate.swift in Sources */,
+				12A1485E28CF5C95000E4E90 /* NullStore.swift in Sources */,
 				125934F028C25179007F7E99 /* CombineHelpers.swift in Sources */,
 				12CBEC592891F89E00AB402F /* FeedViewAdapter.swift in Sources */,
 				127D57BC28CB1DE0005187A9 /* CommentsUIComposer.swift in Sources */,
