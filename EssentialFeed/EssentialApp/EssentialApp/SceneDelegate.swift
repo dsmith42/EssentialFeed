@@ -25,6 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 					.defaultDirectoryURL()
 					.appendingPathComponent("feed-store.sqlite"))
 		} catch {
+			assertionFailure("Failed to instantiate core data store with error: \(error.localizedDescription)")
 			return NullStore()
 		}
 	}()
