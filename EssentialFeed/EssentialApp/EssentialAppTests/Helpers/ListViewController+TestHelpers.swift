@@ -91,6 +91,10 @@ extension ListViewController {
 		delegate?.tableView?(tableView, didSelectRowAt: indexPath)
 	}
 
+	var canLoadMoreFeed: Bool {
+		loadMoreFeedCell() != nil
+	}
+
 	var isShowingLoadMoreFeedIndicator: Bool {
 		loadMoreFeedCell()?.isLoading == true
 	}
@@ -115,20 +119,15 @@ extension ListViewController {
 		numberOfRows(in: feedImagesSection)
 	}
 
-	private var feedImagesSection: Int {
-		return 0
-	}
-
-	private var feedLoadMoreSection: Int {
-		return 1
-	}
-
 	func simulateTapOnFeedImage(at row: Int) {
 		let delegate = tableView.delegate
 		let indexPath = IndexPath(row: row, section: feedImagesSection)
 		delegate?.tableView?(tableView, didSelectRowAt: indexPath)
 	}
 
+	private var feedImagesSection: Int { 0 }
+
+	private var feedLoadMoreSection: Int { 1 }
 }
 
 extension ListViewController {
