@@ -77,6 +77,36 @@ extension ListViewController {
 		ds?.tableView?(tableView, cancelPrefetchingForRowsAt: [index])
 	}
 
+	func simulateLoadMoreFeedAction() {
+		guard let view = loadMoreFeedCell() else { return }
+
+		let delegate = tableView.delegate
+		let indexPath = IndexPath(row: 0, section: feedLoadMoreSection)
+		delegate?.tableView?(tableView, willDisplay: view, forRowAt: indexPath)
+	}
+
+	func simulateLoadMoreErrorViewTap() {
+		let delegate = tableView.delegate
+		let indexPath = IndexPath(row: 0, section: feedLoadMoreSection)
+		delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+	}
+
+	var canLoadMoreFeed: Bool {
+		loadMoreFeedCell() != nil
+	}
+
+	var isShowingLoadMoreFeedIndicator: Bool {
+		loadMoreFeedCell()?.isLoading == true
+	}
+
+	var loadMoreFeedErrorMessage: String? {
+		loadMoreFeedCell()?.message
+	}
+
+	private func loadMoreFeedCell() -> LoadMoreCell? {
+		return cell(row: 0, section: feedLoadMoreSection) as? LoadMoreCell
+	}
+
 	func renderedFeedImageData(at index: Int) -> Data? {
 		return simulateFeedImageViewVisible(at: index)?.renderedImage
 	}
@@ -89,16 +119,15 @@ extension ListViewController {
 		numberOfRows(in: feedImagesSection)
 	}
 
-	private var feedImagesSection: Int {
-		return 0
-	}
-
 	func simulateTapOnFeedImage(at row: Int) {
 		let delegate = tableView.delegate
 		let indexPath = IndexPath(row: row, section: feedImagesSection)
 		delegate?.tableView?(tableView, didSelectRowAt: indexPath)
 	}
 
+	private var feedImagesSection: Int { 0 }
+
+	private var feedLoadMoreSection: Int { 1 }
 }
 
 extension ListViewController {
