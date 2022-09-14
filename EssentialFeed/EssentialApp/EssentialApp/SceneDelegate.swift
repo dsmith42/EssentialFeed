@@ -19,6 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
 	}()
 
+	private var scheduler: AnyDispatchQueueScheduler = DispatchQueue(
+		label: "com.dsmith42.infra.queue",
+		qos: .userInitiated,
+		attributes: .concurrent
+	).eraseToAnyScheduler()
+
 	private lazy var logger = Logger(subsystem: "com.dsmith42.EssentialFeediOS", category: "main")
 
 	private lazy var feedStore: FeedStore & FeedImageDataStore = {
@@ -46,10 +52,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private lazy var baseURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed")!
 
-	convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
+	convenience init(
+		httpClient: HTTPClient,
+		store: FeedStore & FeedImageDataStore,
+		scheduler: AnyDispatchQueueScheduler
+	) {
 		self.init()
 		self.httpClient = httpClient
 		self.feedStore = store
+		self.scheduler = scheduler
 	}
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -108,14 +119,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	private func makeLocalImageLoaderWithRemoteFallback(url: URL) -> FeedImageDataLoader.Publisher {
 		let localImageLoader = LocalFeedImageDataLoader(store: feedStore)
+
 		return localImageLoader
 			.loadImageDataPublisher(from: url)
-			.fallback(to: { [httpClient] in
+			.fallback(to: { [httpClient, scheduler] in
 				httpClient
 					.getPublisher(url: url)
 					.tryMap(FeedImageDataMapper.map)
 					.caching(to: localImageLoader, using: url)
+					.subscribe(on: scheduler)
+					.eraseToAnyPublisher()
 			})
+			.subscribe(on: scheduler)
+			.eraseToAnyPublisher()
 	}
 
 	private func showComments(for image: FeedImage) {
