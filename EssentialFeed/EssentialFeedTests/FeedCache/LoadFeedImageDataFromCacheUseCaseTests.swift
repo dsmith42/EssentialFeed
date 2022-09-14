@@ -21,7 +21,7 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
 		let url = anyURL()
 		let data = anyData()
 
-		try? sut.save(data, for: url)
+		_ = try? sut.save(data, for: url)
 
 		XCTAssertEqual(store.receivedMessages, [.insert(data: data, for: url)])
 	}
@@ -30,7 +30,7 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
 		let (sut, store) = makeSUT()
 		let url = anyURL()
 
-		_ = sut.loadImageData(from: url) { _ in }
+		_ = try? sut.loadImageData(from: url)
 
 		XCTAssertEqual(store.receivedMessages, [.retrieve(dataFor: url)])
 	}
@@ -71,11 +71,11 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
 		return (sut, store)
 	}
 
-	private func failed() -> FeedImageDataLoader.Result {
+	private func failed() -> Result<Data, Error> {
 		return .failure(LocalFeedImageDataLoader.LoadError.failed)
 	}
 
-	private func notFound() -> FeedImageDataLoader.Result {
+	private func notFound() -> Result<Data, Error> {
 		return .failure(LocalFeedImageDataLoader.LoadError.notFound)
 	}
 
@@ -83,28 +83,22 @@ class LoadFeedImageDataFromCacheUseCaseTests: XCTestCase {
 		XCTFail("Expected no no invocations", file: file, line: line)
 	}
 
-	private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-		let exp = expectation(description: "Wait for load completion")
-
+	private func expect(_ sut: LocalFeedImageDataLoader, toCompleteWith expectedResult: Result<Data, Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
 		action()
 
-		_ = sut.loadImageData(from: anyURL()) { receivedResult in
-			switch (receivedResult, expectedResult) {
-			case let (.success(receivedData), .success(expectedData)):
-				XCTAssertEqual(receivedData, expectedData, file: file, line: line)
+		let receivedResult = Result { try sut.loadImageData(from: anyURL()) }
 
-			case let (.failure(receivedError as LocalFeedImageDataLoader.LoadError),
-								.failure(expectedError as LocalFeedImageDataLoader.LoadError)):
-				XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+		switch (receivedResult, expectedResult) {
+		case let (.success(receivedData), .success(expectedData)):
+			XCTAssertEqual(receivedData, expectedData, file: file, line: line)
 
-			default:
-				XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
-			}
+		case let (.failure(receivedError as LocalFeedImageDataLoader.LoadError),
+							.failure(expectedError as LocalFeedImageDataLoader.LoadError)):
+			XCTAssertEqual(receivedError, expectedError, file: file, line: line)
 
-			exp.fulfill()
+		default:
+			XCTFail("Expected result \(expectedResult), got \(receivedResult) instead", file: file, line: line)
 		}
-
-		wait(for: [exp], timeout: 1.0)
 	}
 
 }
