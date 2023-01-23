@@ -2,8 +2,9 @@
 
 [![CI](https://github.com/dsmith42/EssentialFeed/actions/workflows/CI.yml/badge.svg)](https://github.com/dsmith42/EssentialFeed/actions/workflows/CI.yml)
 
-A project to help me learn and practice good software design and principles.
-Including using github actions for CI and CD
+This is my implementation of the EssentialFeed app part of the Essential Developer Lead Essentials course. [Essential Developer](https://www.essentialdeveloper.com/)
+
+An in depth course covering architecture, design patterns and building scalable and thoroughly tested iOS Applications using the TDD methodology.
 
 ## BDD Specs
 
